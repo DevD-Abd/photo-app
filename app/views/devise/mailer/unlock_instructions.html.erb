@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unlock Your Account - Photo App</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background-color: #f3f4f6; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+    .header { background-color: #1C1C1C; padding: 40px 30px; text-align: center; }
+    .logo { color: #ffffff; font-size: 28px; font-weight: bold; margin: 0; }
+    .logo .accent { color: #D4AF37; }
+    .content { padding: 40px 30px; }
+    .welcome { font-size: 24px; font-weight: 600; color: #1f2937; margin-bottom: 20px; }
+    .message { font-size: 16px; line-height: 1.6; color: #4b5563; margin-bottom: 30px; }
+    .button { display: inline-block; background-color: #D4AF37; color: #ffffff; text-decoration: none; padding: 15px 30px; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .footer { background-color: #f9fafb; padding: 20px 30px; text-align: center; font-size: 14px; color: #6b7280; }
+    .security-note { background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="logo">Photo<span class="accent">App</span></h1>
+    </div>
+    
+    <div class="content">
+      <h2 class="welcome">Account Locked</h2>
+      
+      <p class="message">
+        Hello <%= @resource.email %>,<br><br>
+        Your Photo App account has been temporarily locked due to multiple unsuccessful sign-in attempts.
+        This is a security measure to protect your account.
+      </p>
+      
+      <div class="security-note">
+        <p style="margin: 0; color: #dc2626;">
+          <strong>Security Alert:</strong> If these sign-in attempts weren't made by you, 
+          someone may be trying to access your account. Please unlock your account and consider changing your password.
+        </p>
+      </div>
+      
+      <p class="message">
+        To unlock your account and regain access, click the button below:
+      </p>
+      
+      <div style="text-align: center;">
+        <%= link_to 'Unlock My Account', unlock_url(@resource, unlock_token: @token), class: 'button' %>
+      </div>
+      
+      <p class="message">
+        If the button doesn't work, you can copy and paste this link into your browser:<br>
+        <span style="color: #D4AF37; word-break: break-all;"><%= unlock_url(@resource, unlock_token: @token) %></span>
+      </p>
+    </div>
+    
+    <div class="footer">
+      <p>© 2025 Photo App. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
