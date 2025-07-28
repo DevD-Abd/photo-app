@@ -1,4 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  # Change this to your verified Postmark sender signature
+  default from: "abdullahubaidullah@carecloud.com"
   layout "mailer"
 end
