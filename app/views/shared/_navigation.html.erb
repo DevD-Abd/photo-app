@@ -32,12 +32,14 @@
             <div class="relative">
               <div class="flex items-center space-x-4">
                 <div class="text-right">
-                  <span class="text-white text-sm">Welcome, <%= current_user.email.split('@').first.capitalize %></span>
-                  <% if current_user.has_plan? %>
-                    <div class="text-xs px-2 py-1 rounded-full text-white mt-1 bg-primary" style="background-color: var(--primary-color);">
-                      <%= current_user.plan_name %>
-                    </div>
-                  <% end %>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-white text-sm">Welcome, <%= current_user.email.split('@').first.capitalize %></span>
+                    <% if current_user.has_plan? %>
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-sm">
+                        <%= current_user.plan_name.upcase %>
+                      </span>
+                    <% end %>
+                  </div>
                 </div>
                 <div class="relative group">
                   <button class="flex items-center text-white hover:text-primary transition duration-200 focus:outline-none">
@@ -109,13 +111,15 @@
         
         <div class="border-t border-gray-700 pt-4 pb-3">
           <div class="px-3 mb-3">
-            <p class="text-base font-medium text-white"><%= current_user.email.split('@').first.capitalize %></p>
+            <div class="flex items-center justify-between mb-2">
+              <p class="text-base font-medium text-white"><%= current_user.email.split('@').first.capitalize %></p>
+              <% if current_user.has_plan? %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-sm">
+                  <%= current_user.plan_name.upcase %>
+                </span>
+              <% end %>
+            </div>
             <p class="text-sm text-gray-400"><%= current_user.email %></p>
-            <% if current_user.has_plan? %>
-              <span class="inline-block text-xs px-2 py-1 rounded-full text-white mt-2 bg-primary" style="background-color: var(--primary-color);">
-                <%= current_user.plan_name %>
-              </span>
-            <% end %>
           </div>
           <%= link_to "Account Settings", edit_user_registration_path, 
               class: "nav-link text-white hover:text-primary block rounded-md text-base font-medium transition duration-200" %>
