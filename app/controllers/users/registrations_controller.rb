@@ -1,34 +1,34 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  skip_before_action :authenticate_user!, only: [:new, :create]
-  
+  skip_before_action :authenticate_user!, only: [ :new, :create ]
+
   def new
     @plan = params[:plan]
-    unless ['premium', 'amaze'].include?(@plan)
-      redirect_to root_path, alert: 'Please select a valid plan'
+    unless [ "premium", "amaze" ].include?(@plan)
+      redirect_to root_path, alert: "Please select a valid plan"
       return
     end
-    
+
     @user = User.new
     @payment = @user.build_payment(
-      plan: @plan, 
+      plan: @plan,
       amount: Payment::PLANS[@plan][:amount]
     )
-    
+
     # Set minimum password length for view
     @minimum_password_length = User.password_length.min
-    
+
     # Use simple form for testing (you can change this to 'new' for Stripe Elements)
     render :new_simple
   end
 
   def create
     @plan = params.dig(:user, :payment_attributes, :plan)
-    
-    unless ['premium', 'amaze'].include?(@plan)
-      redirect_to root_path, alert: 'Please select a valid plan'
+
+    unless [ "premium", "amaze" ].include?(@plan)
+      redirect_to root_path, alert: "Please select a valid plan"
       return
     end
-    
+
     @user = User.new(user_params)
     @payment = @user.build_payment(payment_params)
     @minimum_password_length = User.password_length.min
@@ -38,9 +38,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
         @user.save!
         if @user.confirmed?
           sign_in(@user)
-          redirect_to root_path, notice: 'Welcome! Your account was created successfully and payment processed.'
+          redirect_to root_path, notice: "Welcome! Your account was created successfully and payment processed."
         else
-          redirect_to root_path, notice: 'Account created successfully! Please check your email to confirm your account.'
+          redirect_to root_path, notice: "Account created successfully! Please check your email to confirm your account."
         end
       else
         @payment.errors.full_messages.each do |message|

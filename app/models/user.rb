@@ -13,12 +13,12 @@ class User < ApplicationRecord
 
   def plan_name
     case plan
-    when 'premium'
-      'Premium Plan'
-    when 'amaze'
-      'Amaze Plan'
+    when "premium"
+      "Premium Plan"
+    when "amaze"
+      "Amaze Plan"
     else
-      'Free Plan'
+      "Free Plan"
     end
   end
 end

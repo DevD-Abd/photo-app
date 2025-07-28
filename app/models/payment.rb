@@ -1,14 +1,14 @@
 class Payment < ApplicationRecord
     attr_accessor :stripe_token
     belongs_to :user
-    
+
     validates :plan, presence: true, inclusion: { in: %w[premium amaze] }
     validates :amount, presence: true, numericality: { greater_than: 0 }
     validates :stripe_token, presence: true, on: :create
 
     PLANS = {
-      'premium' => { name: 'Premium Plan', amount: 900 }, # $9.00 in cents
-      'amaze' => { name: 'Amaze Plan', amount: 1900 }     # $19.00 in cents
+      "premium" => { name: "Premium Plan", amount: 900 }, # $9.00 in cents
+      "amaze" => { name: "Amaze Plan", amount: 1900 }     # $19.00 in cents
     }.freeze
 
     def plan_name
@@ -26,20 +26,20 @@ class Payment < ApplicationRecord
             email: user.email,
             source: stripe_token
         )
-    
+
         charge = Stripe::Charge.create(
             customer: customer.id,
             amount: amount,
             description: plan_name,
-            currency: 'usd'
+            currency: "usd"
         )
-    
+
         self.stripe_customer_id = customer.id
         self.stripe_charge_id = charge.id
-        
+
         # Update user's plan
         user.update(plan: plan)
-        
+
         save!
         rescue Stripe::CardError => e
             errors.add(:base, e.message)

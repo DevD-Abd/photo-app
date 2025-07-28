@@ -1,0 +1,12 @@
+# Brakeman configuration file
+# See https://brakemanscanner.org/docs/options/
+
+# Skip files/folders 
+skip_files:
+  - config/routes_backup.rb
+
+# Exit on warnings
+exit_on_warn: false
+
+# Exit on errors
+exit_on_error: false

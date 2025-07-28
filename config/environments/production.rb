@@ -63,7 +63,7 @@ Rails.application.configure do
   # Configure Postmark for production
   config.action_mailer.delivery_method = :postmark
   config.action_mailer.postmark_settings = {
-    api_token: ENV['POSTMARK_API_TOKEN']
+    api_token: ENV["POSTMARK_API_TOKEN"]
   }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.

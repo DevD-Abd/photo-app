@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_photo, only: [:show, :edit, :update, :destroy]
-  before_action :check_owner, only: [:edit, :update, :destroy]
+  before_action :set_photo, only: [ :show, :edit, :update, :destroy ]
+  before_action :check_owner, only: [ :edit, :update, :destroy ]
 
   def index
     @photos = current_user.photos.order(created_at: :desc)
@@ -17,9 +17,9 @@ class PhotosController < ApplicationController
 
   def create
     @photo = current_user.photos.build(photo_params)
-    
+
     if @photo.save
-      redirect_to @photo, notice: 'Photo was successfully uploaded!'
+      redirect_to @photo, notice: "Photo was successfully uploaded!"
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ class PhotosController < ApplicationController
 
   def update
     if @photo.update(photo_params)
-      redirect_to @photo, notice: 'Photo was successfully updated!'
+      redirect_to @photo, notice: "Photo was successfully updated!"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class PhotosController < ApplicationController
 
   def destroy
     @photo.destroy
-    redirect_to photos_path, notice: 'Photo was successfully deleted!'
+    redirect_to photos_path, notice: "Photo was successfully deleted!"
   end
 
   private
@@ -48,7 +48,7 @@ class PhotosController < ApplicationController
   end
 
   def check_owner
-    redirect_to photos_path, alert: 'Not authorized!' unless @photo.user == current_user
+    redirect_to photos_path, alert: "Not authorized!" unless @photo.user == current_user
   end
 
   def photo_params

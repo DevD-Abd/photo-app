@@ -13,8 +13,8 @@ class Admin::PaymentsController < ApplicationController
 
   def authenticate_admin!
     # Simple admin check - in production, use a proper admin system
-    unless current_user&.email&.ends_with?('@admin.com')
-      redirect_to root_path, alert: 'Access denied'
+    unless current_user&.email&.ends_with?("@admin.com")
+      redirect_to root_path, alert: "Access denied"
     end
   end
 end

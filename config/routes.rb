@@ -1,20 +1,20 @@
 Rails.application.routes.draw do
   # Admin routes
   namespace :admin do
-    resources :payments, only: [:index, :show]
+    resources :payments, only: [ :index, :show ]
   end
-  
+
   # Devise routes for user authentication with custom registration controller
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: "users/registrations"
   }
-  
+
   # Payment routes
-  resources :payments, only: [:new, :create]
-  
+  resources :payments, only: [ :new, :create ]
+
   # Photo routes
   resources :photos
-  
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
