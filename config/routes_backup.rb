@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Rails.aRails.application.routes.draw do
   # Admin routes
   namespace :admin do
     resources :payments, only: [:index, :show]
@@ -14,6 +14,31 @@ Rails.application.routes.draw do
   
   # Photo routes
   resources :photos
+  
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  get "up" => "rails/health#show", as: :rails_health_checkraw do
+  get "photos/index"
+  get "photos/show"
+  get "photos/new"
+  get "photos/create"
+  get "photos/edit"
+  get "photos/update"
+  get "photos/destroy"
+  # Admin routes
+  namespace :admin do
+    resources :payments, only: [:index, :show]
+  end
+  
+  # Devise routes for user authentication with custom registration controller
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+  
+  # Payment routes
+  resources :payments, only: [:new, :create]
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

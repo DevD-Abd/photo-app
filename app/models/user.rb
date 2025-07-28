@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :validatable
   has_one :payment
+  has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :payment
 
   def has_plan?
