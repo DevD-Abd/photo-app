@@ -1,0 +1,10 @@
+# ActiveStorage Attachment fixtures
+photo_one_image:
+  name: image
+  record: one (Photo)
+  blob: test_image_one
+
+photo_two_image:
+  name: image
+  record: two (Photo)
+  blob: test_image_two

@@ -1,38 +1,48 @@
 require "test_helper"
 
 class PhotosControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @user = users(:one)
+    sign_in @user
+    @photo = photos(:one)
+  end
+
   test "should get index" do
-    get photos_index_url
+    get photos_url
     assert_response :success
   end
 
   test "should get show" do
-    get photos_show_url
+    get photo_url(@photo)
     assert_response :success
   end
 
   test "should get new" do
-    get photos_new_url
+    get new_photo_url
     assert_response :success
   end
 
-  test "should get create" do
-    get photos_create_url
+  test "should show create form" do
+    get new_photo_url
     assert_response :success
+    assert_select "form"
   end
 
   test "should get edit" do
-    get photos_edit_url
+    get edit_photo_url(@photo)
     assert_response :success
   end
 
-  test "should get update" do
-    get photos_update_url
+  test "should show edit form" do
+    get edit_photo_url(@photo)
     assert_response :success
+    assert_select "form"
   end
 
-  test "should get destroy" do
-    get photos_destroy_url
-    assert_response :success
+  test "should destroy photo" do
+    assert_difference("Photo.count", -1) do
+      delete photo_url(@photo)
+    end
+    assert_redirected_to photos_url
   end
 end

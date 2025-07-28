@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  email: MyString
-  token: MyString
-  user_id: 1
+  email: "payment1@example.com"
+  token: "tok_test_payment_1"
+  user: one
 
 two:
-  email: MyString
-  token: MyString
-  user_id: 1
+  email: "payment2@example.com"
+  token: "tok_test_payment_2"
+  user: two
