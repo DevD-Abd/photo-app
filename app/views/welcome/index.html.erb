@@ -1,11 +1,11 @@
-<div class="min-h-screen" style="background-color: #1C1C1C;">
+<div class="min-h-screen" style="background-color: var(--dark-bg);">
   <!-- Hero Section -->
-  <div class="relative pt-16 pb-20 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-7xl mx-auto">
+  <div class="relative pt-16 pb-20">
+    <div class="content-wrapper">
       <div class="text-center">
         <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
           Capture Your 
-          <span style="color: #D4AF37;">Memories</span>
+          <span class="text-primary" style="color: var(--primary-color);">Memories</span>
         </h1>
         <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
           A premium photo sharing platform where your moments come to life. 
@@ -15,23 +15,19 @@
         <% unless user_signed_in? %>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <%= link_to "Get Started", new_user_registration_path, 
-                class: "px-8 py-4 text-lg font-semibold text-white rounded-lg transition duration-200 hover:opacity-90 transform hover:scale-105",
-                style: "background-color: #D4AF37;" %>
+                class: "btn-primary transform hover:scale-105" %>
             <%= link_to "Sign In", new_user_session_path, 
-                class: "px-8 py-4 text-lg font-semibold text-white border-2 rounded-lg transition duration-200 hover:bg-white hover:text-gray-900",
-                style: "border-color: #D4AF37;" %>
+                class: "btn-secondary text-white border-primary hover:bg-primary hover:text-white" %>
           </div>
         <% else %>
           <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <div class="text-center mb-4">
-              <p class="text-lg text-gray-300 mb-2">Welcome back! You're on the <strong style="color: #D4AF37;"><%= @user_plan %></strong></p>
+              <p class="text-lg text-gray-300 mb-2">Welcome back! You're on the <strong class="text-primary" style="color: var(--primary-color);"><%= @user_plan %></strong></p>
             </div>
             <%= link_to "Upload Photos", new_photo_path, 
-                class: "px-8 py-4 text-lg font-semibold text-white rounded-lg transition duration-200 hover:opacity-90 transform hover:scale-105",
-                style: "background-color: #D4AF37;" %>
+                class: "btn-primary transform hover:scale-105" %>
             <%= link_to "Browse Gallery", photos_path, 
-                class: "px-8 py-4 text-lg font-semibold text-white border-2 rounded-lg transition duration-200 hover:bg-white hover:text-gray-900",
-                style: "border-color: #D4AF37;" %>
+                class: "btn-secondary text-white border-primary hover:bg-primary hover:text-white" %>
           </div>
         <% end %>
       </div>
@@ -40,12 +36,12 @@
 
   <!-- Features Section -->
   <div class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="content-wrapper">
       <div class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Why Choose Our Platform?
         </h2>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        <p class="text-xl text-muted max-w-2xl mx-auto">
           Professional tools and premium features designed for photography enthusiasts
         </p>
       </div>

@@ -1,11 +1,11 @@
-<nav class="shadow-lg" style="background-color: #1C1C1C;">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<nav class="shadow-lg bg-dark-bg" style="background-color: var(--dark-bg);">
+  <div class="content-wrapper">
     <div class="flex justify-between items-center h-16">
       <!-- Logo/Brand -->
       <div class="flex-shrink-0">
         <%= link_to root_path, class: "flex items-center" do %>
           <span class="text-2xl font-bold text-white">Photo</span>
-          <span class="text-2xl font-bold ml-1" style="color: #D4AF37;">App</span>
+          <span class="text-2xl font-bold ml-1 text-primary" style="color: var(--primary-color);">App</span>
         <% end %>
       </div>
 
@@ -13,16 +13,13 @@
       <div class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-8">
           <%= link_to "Home", root_path, 
-              class: "text-white hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition duration-200 #{'border-b-2' if current_page?(root_path)}", 
-              style: "#{'border-color: #D4AF37;' if current_page?(root_path)}" %>
+              class: "nav-link text-white hover:text-primary transition duration-200 #{'nav-link-active' if current_page?(root_path)}" %>
           
           <% if user_signed_in? %>
             <%= link_to "Gallery", photos_path, 
-                class: "text-white hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition duration-200 #{'border-b-2' if current_page?(photos_path)}", 
-                style: "#{'border-color: #D4AF37;' if current_page?(photos_path)}" %>
+                class: "nav-link text-white hover:text-primary transition duration-200 #{'nav-link-active' if current_page?(photos_path)}" %>
             <%= link_to "Upload Photo", new_photo_path, 
-                class: "text-white hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition duration-200 #{'border-b-2' if current_page?(new_photo_path)}", 
-                style: "#{'border-color: #D4AF37;' if current_page?(new_photo_path)}" %>
+                class: "nav-link text-white hover:text-primary transition duration-200 #{'nav-link-active' if current_page?(new_photo_path)}" %>
           <% end %>
         </div>
       </div>
@@ -37,13 +34,13 @@
                 <div class="text-right">
                   <span class="text-white text-sm">Welcome, <%= current_user.email.split('@').first.capitalize %></span>
                   <% if current_user.has_plan? %>
-                    <div class="text-xs px-2 py-1 rounded-full text-white mt-1" style="background-color: #D4AF37;">
+                    <div class="text-xs px-2 py-1 rounded-full text-white mt-1 bg-primary" style="background-color: var(--primary-color);">
                       <%= current_user.plan_name %>
                     </div>
                   <% end %>
                 </div>
                 <div class="relative group">
-                  <button class="flex items-center text-white hover:text-yellow-400 transition duration-200 focus:outline-none">
+                  <button class="flex items-center text-white hover:text-primary transition duration-200 focus:outline-none">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                     </svg>
@@ -53,7 +50,7 @@
                   </button>
                   
                   <!-- Dropdown Menu -->
-                  <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <%= link_to edit_user_registration_path, 
                         class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-200" do %>
                       <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -78,10 +75,9 @@
             <!-- Auth Links -->
             <div class="flex items-center space-x-4">
               <%= link_to "Sign In", new_user_session_path, 
-                  class: "text-white hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition duration-200" %>
+                  class: "nav-link text-white hover:text-primary transition duration-200" %>
               <%= link_to "Sign Up", new_user_registration_path, 
-                  class: "px-4 py-2 rounded-md text-sm font-medium text-white transition duration-200 hover:opacity-90",
-                  style: "background-color: #D4AF37;" %>
+                  class: "btn-primary" %>
             </div>
           <% end %>
         </div>
@@ -89,7 +85,7 @@
 
       <!-- Mobile menu button -->
       <div class="md:hidden">
-        <button type="button" class="mobile-menu-button text-white hover:text-yellow-400 focus:outline-none focus:text-yellow-400 transition duration-200">
+        <button type="button" class="mobile-menu-button text-white hover:text-primary focus:outline-none transition duration-200">
           <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
             <path class="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             <path class="close-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -103,37 +99,36 @@
   <div class="mobile-menu hidden md:hidden">
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-700">
       <%= link_to "Home", root_path, 
-          class: "text-white hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium transition duration-200 #{'bg-gray-800' if current_page?(root_path)}" %>
+          class: "nav-link text-white hover:text-primary block rounded-md text-base font-medium transition duration-200 #{'bg-gray-800' if current_page?(root_path)}" %>
       
       <% if user_signed_in? %>
         <%= link_to "Gallery", photos_path, 
-            class: "text-white hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium transition duration-200 #{'bg-gray-800' if current_page?(photos_path)}" %>
+            class: "nav-link text-white hover:text-primary block rounded-md text-base font-medium transition duration-200 #{'bg-gray-800' if current_page?(photos_path)}" %>
         <%= link_to "Upload Photo", new_photo_path, 
-            class: "text-white hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium transition duration-200 #{'bg-gray-800' if current_page?(new_photo_path)}" %>
+            class: "nav-link text-white hover:text-primary block rounded-md text-base font-medium transition duration-200 #{'bg-gray-800' if current_page?(new_photo_path)}" %>
         
         <div class="border-t border-gray-700 pt-4 pb-3">
           <div class="px-3 mb-3">
             <p class="text-base font-medium text-white"><%= current_user.email.split('@').first.capitalize %></p>
             <p class="text-sm text-gray-400"><%= current_user.email %></p>
             <% if current_user.has_plan? %>
-              <span class="inline-block text-xs px-2 py-1 rounded-full text-white mt-2" style="background-color: #D4AF37;">
+              <span class="inline-block text-xs px-2 py-1 rounded-full text-white mt-2 bg-primary" style="background-color: var(--primary-color);">
                 <%= current_user.plan_name %>
               </span>
             <% end %>
           </div>
           <%= link_to "Account Settings", edit_user_registration_path, 
-              class: "text-white hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium transition duration-200" %>
+              class: "nav-link text-white hover:text-primary block rounded-md text-base font-medium transition duration-200" %>
           <%= link_to "Sign Out", destroy_user_session_path, 
               data: { "turbo-method": :delete },
-              class: "text-white hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium transition duration-200" %>
+              class: "nav-link text-white hover:text-primary block rounded-md text-base font-medium transition duration-200" %>
         </div>
       <% else %>
         <div class="border-t border-gray-700 pt-4 pb-3 space-y-2">
           <%= link_to "Sign In", new_user_session_path, 
-              class: "text-white hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium transition duration-200" %>
+              class: "nav-link text-white hover:text-primary block rounded-md text-base font-medium transition duration-200" %>
           <%= link_to "Sign Up", new_user_registration_path, 
-              class: "block px-3 py-2 rounded-md text-base font-medium text-white transition duration-200 hover:opacity-90",
-              style: "background-color: #D4AF37;" %>
+              class: "btn-primary block text-center" %>
         </div>
       <% end %>
     </div>
