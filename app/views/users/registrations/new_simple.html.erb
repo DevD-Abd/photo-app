@@ -1,0 +1,125 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md mx-auto">
+    <div class="text-center">
+      <h2 class="mt-6 text-3xl font-bold text-gray-900">
+        Sign up for <%= @payment.plan_name %>
+      </h2>
+      <p class="mt-2 text-sm text-gray-600">
+        Create your account and complete payment (Test Mode)
+      </p>
+    </div>
+
+    <div class="mt-8 bg-white py-8 px-6 shadow rounded-lg">
+      <!-- Plan Summary -->
+      <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2"><%= @payment.plan_name %></h3>
+        <p class="text-2xl font-bold" style="color: #D4AF37;">$<%= @payment.plan_amount_in_dollars %>/month</p>
+      </div>
+
+      <%= form_with model: @user, url: user_registration_path, local: true, class: "space-y-6" do |form| %>
+        <% if @user.errors.any? %>
+          <div class="rounded-md bg-red-50 p-4">
+            <div class="flex">
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-red-800">
+                  There were some errors with your submission:
+                </h3>
+                <div class="mt-2 text-sm text-red-700">
+                  <ul class="list-disc pl-5 space-y-1">
+                    <% @user.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- User Information -->
+        <div>
+          <h4 class="text-lg font-medium text-gray-900 mb-4">Account Information</h4>
+          
+          <div class="space-y-4">
+            <div>
+              <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+              <%= form.email_field :email, autofocus: true, autocomplete: "email",
+                  class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
+            </div>
+
+            <div>
+              <%= form.label :password, class: "block text-sm font-medium text-gray-700" %>
+              <% if @minimum_password_length %>
+                <span class="text-sm text-gray-500">(<%= @minimum_password_length %> characters minimum)</span>
+              <% end %>
+              <%= form.password_field :password, autocomplete: "new-password",
+                  class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
+            </div>
+
+            <div>
+              <%= form.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+              <%= form.password_field :password_confirmation, autocomplete: "new-password",
+                  class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Information -->
+        <%= form.fields_for :payment_attributes, @payment do |payment_form| %>
+          <%= payment_form.hidden_field :plan %>
+          <%= payment_form.hidden_field :amount %>
+          
+          <div>
+            <h4 class="text-lg font-medium text-gray-900 mb-4">Payment Information (Test Mode)</h4>
+            
+            <div class="space-y-4">
+              <div class="p-4 bg-blue-50 border border-blue-200 rounded-md">
+                <h5 class="font-semibold text-blue-900 mb-2">Test Payment Tokens</h5>
+                <p class="text-sm text-blue-800 mb-3">Select a test token to simulate different payment scenarios:</p>
+                
+                <div class="space-y-2">
+                  <label class="flex items-center">
+                    <%= payment_form.radio_button :stripe_token, "tok_visa", checked: true, class: "mr-2" %>
+                    <span class="text-sm">Success - Visa (tok_visa)</span>
+                  </label>
+                  <label class="flex items-center">
+                    <%= payment_form.radio_button :stripe_token, "tok_mastercard", class: "mr-2" %>
+                    <span class="text-sm">Success - Mastercard (tok_mastercard)</span>
+                  </label>
+                  <label class="flex items-center">
+                    <%= payment_form.radio_button :stripe_token, "tok_chargeDeclined", class: "mr-2" %>
+                    <span class="text-sm">Declined Card (tok_chargeDeclined)</span>
+                  </label>
+                  <label class="flex items-center">
+                    <%= payment_form.radio_button :stripe_token, "tok_chargeDeclinedInsufficientFunds", class: "mr-2" %>
+                    <span class="text-sm">Insufficient Funds (tok_chargeDeclinedInsufficientFunds)</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <div>
+          <%= form.submit "Complete Registration & Payment", 
+              class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200",
+              style: "background-color: #D4AF37;" %>
+        </div>
+
+        <div class="text-center">
+          <p class="text-sm text-gray-600">
+            Already have an account?
+            <%= link_to "Sign in", new_user_session_path, class: "font-medium hover:underline", style: "color: #D4AF37;" %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mt-6 text-center text-sm text-gray-500">
+      <p>🔒 Test mode - No real payments will be processed</p>
+      <p class="mt-2">
+        <strong>Production version</strong> will use Stripe Elements for secure card input
+      </p>
+    </div>
+  </div>
+</div>

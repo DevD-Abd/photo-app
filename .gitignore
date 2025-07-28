@@ -39,3 +39,7 @@
 
 # Ignore node_modules
 /node_modules
+
+
+/STRIPE_INTEGRATION.md
+/STRIPE_FIX_COMPLETE.md

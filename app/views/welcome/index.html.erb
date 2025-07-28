@@ -22,7 +22,10 @@
                 style: "border-color: #D4AF37;" %>
           </div>
         <% else %>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div class="text-center mb-4">
+              <p class="text-lg text-gray-300 mb-2">Welcome back! You're on the <strong style="color: #D4AF37;"><%= @user_plan %></strong></p>
+            </div>
             <%= link_to "Upload Photos", "#", 
                 class: "px-8 py-4 text-lg font-semibold text-white rounded-lg transition duration-200 hover:opacity-90 transform hover:scale-105",
                 style: "background-color: #D4AF37;" %>
@@ -80,6 +83,134 @@
       </div>
     </div>
   </div>
+
+  <!-- Pricing Plans -->
+  <% unless user_signed_in? %>
+    <div class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Choose Your Plan
+          </h2>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Select the perfect plan to unlock your photography potential
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <!-- Premium Plan -->
+          <div class="bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-200 hover:shadow-xl transition duration-300">
+            <div class="text-center mb-8">
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium Plan</h3>
+              <div class="flex items-center justify-center mb-4">
+                <span class="text-5xl font-bold text-gray-900">$9</span>
+                <span class="text-gray-600 ml-2">/month</span>
+              </div>
+              <p class="text-gray-600">Perfect for photography enthusiasts</p>
+            </div>
+
+            <ul class="space-y-4 mb-8">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Upload up to 500 photos/month</span>
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">HD quality uploads</span>
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Basic photo editing tools</span>
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Community access</span>
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Email support</span>
+              </li>
+            </ul>
+
+            <%= link_to "Choose Premium", new_user_registration_path(plan: 'premium'), 
+                class: "w-full block text-center px-6 py-3 text-lg font-semibold text-white rounded-lg transition duration-200 hover:opacity-90",
+                style: "background-color: #D4AF37;" %>
+          </div>
+
+          <!-- Amaze Plan -->
+          <div class="bg-white rounded-2xl shadow-lg p-8 border-2 relative hover:shadow-xl transition duration-300" style="border-color: #D4AF37;">
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+              <span class="px-4 py-2 text-sm font-semibold text-white rounded-full" style="background-color: #D4AF37;">
+                Most Popular
+              </span>
+            </div>
+            
+            <div class="text-center mb-8">
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">Amaze Plan</h3>
+              <div class="flex items-center justify-center mb-4">
+                <span class="text-5xl font-bold text-gray-900">$19</span>
+                <span class="text-gray-600 ml-2">/month</span>
+              </div>
+              <p class="text-gray-600">For professional photographers</p>
+            </div>
+
+            <ul class="space-y-4 mb-8">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Unlimited photo uploads</span>
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">4K & RAW file support</span>
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Advanced editing suite</span>
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Portfolio website</span>
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Analytics & insights</span>
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" style="color: #D4AF37;" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Priority support</span>
+              </li>
+            </ul>
+
+            <%= link_to "Choose Amaze", new_user_registration_path(plan: 'amaze'), 
+                class: "w-full block text-center px-6 py-3 text-lg font-semibold text-white rounded-lg transition duration-200 hover:opacity-90",
+                style: "background-color: #D4AF37;" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
   <!-- Call to Action -->
   <% unless user_signed_in? %>

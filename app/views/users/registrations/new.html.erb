@@ -1,0 +1,174 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md mx-auto">
+    <div class="text-center">
+      <h2 class="mt-6 text-3xl font-bold text-gray-900">
+        Sign up for <%= @payment.plan_name %>
+      </h2>
+      <p class="mt-2 text-sm text-gray-600">
+        Create your account and complete payment
+      </p>
+    </div>
+
+    <div class="mt-8 bg-white py-8 px-6 shadow rounded-lg">
+      <!-- Plan Summary -->
+      <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2"><%= @payment.plan_name %></h3>
+        <p class="text-2xl font-bold" style="color: #D4AF37;">$<%= @payment.plan_amount_in_dollars %>/month</p>
+      </div>
+
+      <%= form_with model: @user, url: user_registration_path, local: true, class: "space-y-6", id: "payment-form" do |form| %>
+        <% if @user.errors.any? %>
+          <div class="rounded-md bg-red-50 p-4">
+            <div class="flex">
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-red-800">
+                  There were some errors with your submission:
+                </h3>
+                <div class="mt-2 text-sm text-red-700">
+                  <ul class="list-disc pl-5 space-y-1">
+                    <% @user.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- User Information -->
+        <div>
+          <h4 class="text-lg font-medium text-gray-900 mb-4">Account Information</h4>
+          
+          <div class="space-y-4">
+            <div>
+              <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+              <%= form.email_field :email, autofocus: true, autocomplete: "email",
+                  class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
+            </div>
+
+            <div>
+              <%= form.label :password, class: "block text-sm font-medium text-gray-700" %>
+              <% if @minimum_password_length %>
+                <span class="text-sm text-gray-500">(<%= @minimum_password_length %> characters minimum)</span>
+              <% end %>
+              <%= form.password_field :password, autocomplete: "new-password",
+                  class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
+            </div>
+
+            <div>
+              <%= form.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+              <%= form.password_field :password_confirmation, autocomplete: "new-password",
+                  class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Information -->
+        <%= form.fields_for :payment_attributes, @payment do |payment_form| %>
+          <%= payment_form.hidden_field :plan %>
+          <%= payment_form.hidden_field :amount %>
+          <%= payment_form.hidden_field :stripe_token %>
+          
+          <div>
+            <h4 class="text-lg font-medium text-gray-900 mb-4">Payment Information</h4>
+            
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Card Information</label>
+                <div id="card-element" class="p-3 border border-gray-300 rounded-md bg-white">
+                  <!-- Stripe Elements will create form elements here -->
+                </div>
+                <div id="card-errors" class="text-red-600 text-sm mt-2" role="alert"></div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <div>
+          <%= form.submit "Complete Registration & Payment", 
+              class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200",
+              style: "background-color: #D4AF37;",
+              id: "submit-button" %>
+        </div>
+
+        <div class="text-center">
+          <p class="text-sm text-gray-600">
+            Already have an account?
+            <%= link_to "Sign in", new_user_session_path, class: "font-medium hover:underline", style: "color: #D4AF37;" %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mt-6 text-center text-sm text-gray-500">
+      <p>🔒 Your payment information is secure and encrypted</p>
+      <p class="mt-2 text-xs">
+        For testing, use card number: 4242 4242 4242 4242<br>
+        Use any future expiry date and any 3-digit CVC
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Stripe Elements JavaScript -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Stripe
+    const stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>');
+    const elements = stripe.elements();
+
+    // Create and mount the card element
+    const cardElement = elements.create('card', {
+      style: {
+        base: {
+          fontSize: '16px',
+          color: '#424770',
+          '::placeholder': {
+            color: '#aab7c4',
+          },
+        },
+        invalid: {
+          color: '#9e2146',
+        },
+      },
+    });
+
+    cardElement.mount('#card-element');
+
+    // Handle form submission
+    const form = document.getElementById('payment-form');
+    const submitButton = document.getElementById('submit-button');
+    const cardErrors = document.getElementById('card-errors');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      submitButton.disabled = true;
+      submitButton.textContent = 'Processing...';
+
+      const {token, error} = await stripe.createToken(cardElement);
+
+      if (error) {
+        // Show error to customer
+        cardErrors.textContent = error.message;
+        submitButton.disabled = false;
+        submitButton.textContent = 'Complete Registration & Payment';
+      } else {
+        // Submit the token to the server
+        const tokenInput = document.getElementById('user_payment_attributes_stripe_token');
+        tokenInput.value = token.id;
+        form.submit();
+      }
+    });
+
+    // Handle real-time validation errors from the card Element
+    cardElement.on('change', ({error}) => {
+      if (error) {
+        cardErrors.textContent = error.message;
+      } else {
+        cardErrors.textContent = '';
+      }
+    });
+  });
+</script>

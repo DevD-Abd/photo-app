@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
-  # Devise routes for user authentication
-  devise_for :users
+  # Admin routes
+  namespace :admin do
+    resources :payments, only: [:index, :show]
+  end
+  
+  # Devise routes for user authentication with custom registration controller
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+  
+  # Payment routes
+  resources :payments, only: [:new, :create]
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
